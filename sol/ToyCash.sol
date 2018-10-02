@@ -1,32 +1,54 @@
-pragma solidity ^0.4.25;
+pragma solidity ^0.4.24;
 
 import "./ECRecovery.sol";
 
 contract ToyCash {
 
-    // function to get token balance
-    function getTokenBalance(address _tokenAddress) public view returns(uint) {
-        ERC20Interface token = ERC20Interface(_tokenAddress);
-        return token.balanceOf(msg.sender);
-    }
+    /*
+     * Storage
+     */
 
     // list for keeping whether tweets are already registered
-    mapping (uint256 => bool) public tweet_registered;
+    mapping(uint256 => bool) public tweet_registered;
 
-    // function to take in tweet into block
-    function setTweet(
+    /*
+     * Public functon
+     */
+
+    /**
+     * @param _tokenAddress is a token address
+     * @return balance is the sender's balance of the token that address is the same with _tokenAddress
+     */
+
+    function getTokenBalance(address _tokenAddress) public view returns(uint balance) {
+        ERC20Interface token = ERC20Interface(_tokenAddress);
+        balance = token.balanceOf(msg.sender);
+    }
+
+    /**
+     * @dev _judgeAddress send reward to _userAddress
+     * @param _amount is the reward amount
+     */
+
+    function sendReward (
         uint256 _tweetId,
         address _userAddress,
-        address _judgeAddress,
         uint256 _amount,
         address _tokenAddress,
-        bytes32 _tweetHash,
+        address _judgeAddress,
         bytes _judgeSig
     ) public {
         ERC20Interface token = ERC20Interface(_tokenAddress);
 
+        bytes32 hashedTweetObject = hashTweetObject(
+            _tweetId,
+            _userAddress,
+            _amount,
+            _tokenAddress
+        );
+
         // validate signature
-        require(_judgeAddress == ECRecovery.recover(_tweetHash, _judgeSig));
+        require(_judgeAddress == ECRecovery.recover(hashedTweetObject, _judgeSig));
 
         require(!tweet_registered[_tweetId]);
 
@@ -36,6 +58,20 @@ contract ToyCash {
 
         // keeping this tweet are already registered
         tweet_registered[_tweetId] = true;
+    }
+
+    function hashTweetObject (
+        uint256 _tweetId,
+        address _userAddress,
+        uint256 _amount,
+        address _tokenAddress
+    ) public pure returns (bytes32 hashedTweetObject) {
+        hashedTweetObject = keccak256(abi.encodePacked(
+            _tweetId,
+            _userAddress,
+            _amount,
+            _tokenAddress
+        ));
     }
 }
 
