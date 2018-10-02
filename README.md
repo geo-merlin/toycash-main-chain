@@ -2,15 +2,16 @@
 
 This repository is the source codes for the ToyCash main chain.
 
-## preparation
+## Preparation
 
-One deploys the BlockDoubtToken contract and note the contract address.
+Deploy the BlockDoubtToken contract and note the contract address.
+Make this token involved in each Hashtags.
 
 Here use 0x38034f435664dec5db77556811891337bf170346 as the token address.
 
 ## Hash Tweet Object
 
-A judgeman makes a signature when he finds a great tweet and wants to send a token involved in hashtags to the tweet writer.
+A judgeman makes a signature when he finds a great tweet and wants to send a token to the tweet writer.
 
 First, the imformation of the favorite tweet is consisted four components as follows:
 
@@ -40,7 +41,6 @@ const hashed_tweet_object = web3.utils.keccak256(web3.utils.utf8ToHex(
 ## Sign Tweet Object
 
 Then, he signs to the hash made above.
-
 He tweets with the sign as quoted retweet to the favorite tweet picked above.
 
 ### Javascript code
