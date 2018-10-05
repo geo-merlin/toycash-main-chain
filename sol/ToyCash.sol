@@ -12,6 +12,13 @@ contract ToyCash {
     mapping(uint256 => bool) public tweet_registered;
 
     /*
+     * Event
+     */
+
+
+    event LogJudgement(address expected_address, address obtained_address);
+
+    /*
      * Public functon
      */
 
@@ -36,19 +43,22 @@ contract ToyCash {
         uint256 _amount,
         address _tokenAddress,
         address _judgeAddress,
+        bytes32 _hashedTweetObject,
         bytes _judgeSig
     ) public {
         ERC20Interface token = ERC20Interface(_tokenAddress);
 
-        bytes32 hashedTweetObject = hashTweetObject(
-            _tweetId,
-            _userAddress,
-            _amount,
-            _tokenAddress
-        );
+        // bytes32 hashedTweetObject = hashTweetObject(
+        //     _tweetId,
+        //     _userAddress,
+        //     _amount,
+        //     _tokenAddress
+        // );
 
         // validate signature
-        require(_judgeAddress == ECRecovery.recover(hashedTweetObject, _judgeSig));
+        address judgeAddress = ECRecovery.recover(_hashedTweetObject, _judgeSig);
+        emit LogJudgement(_judgeAddress, judgeAddress);
+        require(_judgeAddress == judgeAddress);
 
         require(!tweet_registered[_tweetId]);
 
@@ -60,19 +70,19 @@ contract ToyCash {
         tweet_registered[_tweetId] = true;
     }
 
-    function hashTweetObject (
-        uint256 _tweetId,
-        address _userAddress,
-        uint256 _amount,
-        address _tokenAddress
-    ) public pure returns (bytes32 hashedTweetObject) {
-        hashedTweetObject = keccak256(abi.encodePacked(
-            _tweetId,
-            _userAddress,
-            _amount,
-            _tokenAddress
-        ));
-    }
+    // function hashTweetObject (
+    //     uint256 _tweetId,
+    //     address _userAddress,
+    //     uint256 _amount,
+    //     address _tokenAddress
+    // ) public pure returns (bytes packedTweetObject) {
+    //     packedTweetObject = abi.encodePacked(
+    //         _tweetId,
+    //         _userAddress,
+    //         _amount,
+    //         _tokenAddress
+    //     );
+    // }
 }
 
 contract ERC20Interface {
