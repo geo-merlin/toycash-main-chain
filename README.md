@@ -47,7 +47,7 @@ He tweets with the sign as quoted retweet to the favorite tweet picked above.
 
 ```
 const hashed_tweet_object = "0xa9c7994e33ea7d8e24bea5caab39a9a837692946cc8b736cc093818f100e52f1";
-const private_key = "A0DFDC07ACC8F7BE5B685562BCB88D6ED0E3DD00387BFCAA3FD74235F01A4171";
+const private_key = "****************************************************************";
 const signed_tweet_object = web3js.eth.accounts.sign(
     "0xa757826e274e629757cb39cae4f77c48232345efb62fc33a1bcbe8eb5adb842b",
     "A0DFDC07ACC8F7BE5B685562BCB88D6ED0E3DD00387BFCAA3FD74235F01A4171"
