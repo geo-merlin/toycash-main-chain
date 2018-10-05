@@ -43,12 +43,12 @@ contract ToyCash {
         uint256 _amount,
         address _tokenAddress,
         address _judgeAddress,
-        bytes32 _hashedTweetObject,
+        bytes32 _messageHash,
         bytes _judgeSig
     ) public {
         ERC20Interface token = ERC20Interface(_tokenAddress);
 
-        // bytes32 hashedTweetObject = hashTweetObject(
+        // bytes32 messageHash = packTweetObject(
         //     _tweetId,
         //     _userAddress,
         //     _amount,
@@ -56,7 +56,7 @@ contract ToyCash {
         // );
 
         // validate signature
-        address judgeAddress = ECRecovery.recover(_hashedTweetObject, _judgeSig);
+        address judgeAddress = ECRecovery.recover(_messageHash, _judgeSig);
         emit LogJudgement(_judgeAddress, judgeAddress);
         require(_judgeAddress == judgeAddress);
 
@@ -70,19 +70,19 @@ contract ToyCash {
         tweet_registered[_tweetId] = true;
     }
 
-    // function hashTweetObject (
-    //     uint256 _tweetId,
-    //     address _userAddress,
-    //     uint256 _amount,
-    //     address _tokenAddress
-    // ) public pure returns (bytes packedTweetObject) {
-    //     packedTweetObject = abi.encodePacked(
-    //         _tweetId,
-    //         _userAddress,
-    //         _amount,
-    //         _tokenAddress
-    //     );
-    // }
+    function packTweetObject (
+        uint256 _tweetId,
+        address _userAddress,
+        uint256 _amount,
+        address _tokenAddress
+    ) public pure returns (bytes packedTweetObject) {
+        packedTweetObject = abi.encodePacked(
+            _tweetId,
+            _userAddress,
+            _amount,
+            _tokenAddress
+        );
+    }
 }
 
 contract ERC20Interface {
