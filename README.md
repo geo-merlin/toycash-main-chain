@@ -7,7 +7,7 @@ This repository is the source codes for the ToyCash main chain.
 Deploy the BlockDoubtToken contract and note the contract address.
 Make this token involved in each Hashtags.
 
-Here use 0x38034f435664dec5db77556811891337bf170346 as the token address.
+Here use 0x692a70d2e424a56d2c6c27aa97d1a86395877b3a as the token address.
 
 ## Hash Tweet Object
 
@@ -47,7 +47,7 @@ He tweets with the sign as quoted retweet to the favorite tweet picked above.
 
 ```
 const paced_tweet_object = "0x0000000000000000000000000000000000000000000000000e8aa60c1e14f00514723a09acff6d2a60dcdf7aa4aff308fddc160c0000000000000000000000000000000000000000000000000000000000000064692a70d2e424a56d2c6c27aa97d1a86395877b3a";
-const private_key = "****************************************************************";
+const private_key = "0x****************************************************************";
 const signed_tweet_object = web3js.eth.accounts.sign(
     packed_tweet_object,
     private_key
