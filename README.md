@@ -22,20 +22,20 @@ First, the imformation of the favorite tweet is consisted four components as fol
 
 He makes a hash these data with sha3 [keccak256].
 
-### JavaScript code
+### Solidity code
 
 ```
-uint256 tweetId = 1047825270722387968;
-address userAddress = "0xb71f2b9f5657401fd9b42b91eb51d3cf71f78a32";
+uint256 tweetId = 1047832434291568645;
+address userAddress = "0x14723a09acff6d2a60dcdf7aa4aff308fddc160c";
 uint256 amount = 100;
-address tokenAddress = "0x3727effe1311561b441aeb31edeefbf52d210041";
+address tokenAddress = "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a";
 bytes hashedTweetObject = hashTweetObject(
     tweet_id,
     user_address,
     amount,
     token_address
 );
-// hashed_tweet_object -> "0xa9c7994e33ea7d8e24bea5caab39a9a837692946cc8b736cc093818f100e52f1"
+// hashed_tweet_object -> "0x0000000000000000000000000000000000000000000000000e8aa60c1e14f00514723a09acff6d2a60dcdf7aa4aff308fddc160c0000000000000000000000000000000000000000000000000000000000000064692a70d2e424a56d2c6c27aa97d1a86395877b3a"
 ```
 
 ## Sign Tweet Object
@@ -46,13 +46,16 @@ He tweets with the sign as quoted retweet to the favorite tweet picked above.
 ### Javascript code
 
 ```
-const hashed_tweet_object = "0xa9c7994e33ea7d8e24bea5caab39a9a837692946cc8b736cc093818f100e52f1";
+const hashed_tweet_object = "0x0000000000000000000000000000000000000000000000000e8aa60c1e14f00514723a09acff6d2a60dcdf7aa4aff308fddc160c0000000000000000000000000000000000000000000000000000000000000064692a70d2e424a56d2c6c27aa97d1a86395877b3a";
 const private_key = "****************************************************************";
 const signed_tweet_object = web3js.eth.accounts.sign(
-    "0xa757826e274e629757cb39cae4f77c48232345efb62fc33a1bcbe8eb5adb842b",
-    "A0DFDC07ACC8F7BE5B685562BCB88D6ED0E3DD00387BFCAA3FD74235F01A4171"
-).signature;
-// signed_tweet_object -> "0xe7374a76797c4ac879425a97487d1b6199ca6909fd88834c349704f0dda006656e7bc1b2bbfe7dbc6b05607aa7e0dea2fae74ed2a57065671e92395493c535bd1b"
+    hashed_tweet_object,
+    private_key
+);
+const signature = signed_tweet_object.signature;
+const message_hash = signed_tweet_object.messageHash;
+// signature -> "0x746106b4f0cb7e6d881c7788483c380d7b8d5961082bd4cc3f495a48ca8b9a3a6bd8e6b7435ffbbfa2a787423f9023ec4bdf9f44ed4d9df58ff67749effdf64f00"
+// messageHash -> "0x28064d7ae65040e51ae02dfa2e62c1dc5c1bdfb3f8097993c8b5f50aaef7a7fe"
 ```
 
 ## Send Reward
@@ -62,18 +65,20 @@ Finally, One inputs the sign in contract and as a result the designated reward i
 ### Solidity code
 
 ```
-uint256 tweetId = 1047825270722387968;
-address userAddress = "0xb71f2b9f5657401fd9b42b91eb51d3cf71f78a32";
+uint256 tweetId = 1047832434291568645;
+address userAddress = "0x14723a09acff6d2a60dcdf7aa4aff308fddc160c";
 uint256 amount = 100;
-address tokenAddress = "0x3727effe1311561b441aeb31edeefbf52d210041";
-address judgeAddress = "0xc194e8c6fd6d7a99b054ab81824a52b9e7fcb766";
-bytes judgeSig = "0xa4893e310871b7f544f76a8dbe87b8ad65bea0f3766b3847dd66bf5788faa7653f094ad3965a88b36128b0ec0862b65c06a3bfae6d59ef02f5c4e93e67742fed1c";
+address tokenAddress = "0x692a70d2e424a56d2c6c27aa97d1a86395877b3a";
+address judgeAddress = "0xca35b7d915458ef540ade6068dfe2f44e8fa733c";
+bytes messageHash = "0x28064d7ae65040e51ae02dfa2e62c1dc5c1bdfb3f8097993c8b5f50aaef7a7fe";
+bytes judgeSig = "0x746106b4f0cb7e6d881c7788483c380d7b8d5961082bd4cc3f495a48ca8b9a3a6bd8e6b7435ffbbfa2a787423f9023ec4bdf9f44ed4d9df58ff67749effdf64f00";
 sendReward(
     tweetId,
     userAddress,
     amount,
     tokenAddress,
     judgeAddress,
+    messageHash,
     judgeSig
 ));
 ```
