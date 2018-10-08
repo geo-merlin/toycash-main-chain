@@ -1,0 +1,37 @@
+body{
+    margin-bottom: 100px;
+}
+.navbar-default {
+    background-color: #65baad;
+    border-color: #3e6962;
+}
+.navbar-default .navbar-brand {
+    color: #ffffff;
+}
+.command{
+    margin: 5px;
+}
+.output, .my-token-list{
+    border: 1px solid black;
+    min-height: 20px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 22px;
+}
+.my-token-list > ul > li {
+    font-size: 26px;
+    font-weight: bold;
+}
+.textbox{
+    min-width: 200px;
+}
+.form-control{
+    display: inline !important;
+    width: auto !important;
+}
+.btn-command{
+    min-width: 180px;
+}
+.btn-header{
+    padding: 12px 18px;
+}

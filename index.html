@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+        <title>PLC DEMO</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href=""/>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="src/web3.min.js"></script>
+        <script type="text/javascript" src="src/cryptico.js"></script>
+        <script type="text/javascript" src="js/toycashContractABI.js"></script>
+        <script type="text/javascript" src="js/blockdoubtContractABI.js"></script>
+        <script type="text/javascript" src="js/contract.js"></script>
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-105834787-1', 'auto');
+        ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://www.geomerlin.com">Geomerlin Systems</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="navbar-form navbar-right" id='ac-form'>
+                        <div class="form-group">
+                        <span id='user-name'>Welcome!</span>
+                        </div>
+                        <div class="form-group" id='head-buttons'>
+                            <button class="btn btn-primary" id ='signin-btn' onclick='newTab("https://www.geomerlin.com")'>Sign in</button>
+                            <button class="btn btn-default" id='signup-btn'onclick='newTab("https://www.geomerlin.com")'>Sing up</button>
+                        </div>
+                    </div>
+                </div><!--/.navbar-collapse -->
+            </div>
+        </nav>
+        <div id="home-page" class="container content">
+            <div class="row" style="margin-bottom: 10px; margin-top: 40px;">
+                <div class="col-xs-0 col-sm-2 col-lg-2"></div>
+                <div class="col-xs-12 col-sm-8 col-lg-8">
+                    <div id="commands" style="margin: 10px;">
+                        <h3 class="chapter bg-warning">Let's use our distributed office system!</h3>
+                        <div class="command">
+                            <button type="button" id="createToken" class="btn btn-primary btn-command">Offer to create a token</button>
+                        </div>
+                        <div class="my-token-list"></div>
+                        <div class="output"></div>
+                    </div>
+                </div>
+                <div class="col-xs-0 col-sm-2 col-lg-2"></div>
+            </div>
+            <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <span class="modal-title" style="float:left;color:blue;font-size:36px;"> ERC-XXX <br>Maneger Token Demo</span>
+                      <button type="button" class="btn btn-header" data-dismiss="modal" style="float:right;">X</button>
+                      <button type="button" class="btn btn-danger btn-header" style="float:right;" onclick="fontLarge();">FontBig↑</button>
+                    </div>
+                    <div class="modal-body the-modal-content">
+　　                  　　　  <div>
+                        <h3><br>To develop PaaS/Ethereum Half&Half System</br></h3>
+                        <p>This token standard is proposed to make cloud systems simple, secure and open.</p>
+                        <br>
+                        <p>Non Fungible Token Standard ERC721 enabled us to have an ID card on Ethereum.</p>
+                        <p>This ID card token can be used as an identity on Cloud system as well, which shows policies and permissions.<p>
+                        <p>The picture below tells the simplest way to make such an identity token.<p>
+                        <img></img>
+                        <p>① Create a token</p>
+                        <p>② Add a public keys these ID cards<p>
+                        <p>③ Request a server to execute a function which is authorized with the 'authority' attribution the token and sign by the public key</p>
+                        <p>④ Server check the sign by the public key, execute the function, and returns the result.</p>
+                        <p>Let us try to use these tokens in the next page!!</p>
+                      </div>
+                    </div>
+                    <div class="loader loader-4" style="display: none;"></div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn " data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger" onclick="back();">BACK</button>
+                      <button type="button" class="btn btn-primary" onclick="next();">NEXT</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <span class="modal-title" style="float:left;color:blue;font-size:36px;">Manager Token Demo</span>
+                    <button type="button" class="btn btn-header" data-dismiss="modal" style="float:right;">X</button>
+                    <button type="button" class="btn btn-danger btn-header" style="float:right;" onclick="fontLarge();">文字を大きく</button>
+                  </div>
+                  <div class="modal-body the-modal-content">
+　　                <div>
+                      <h3><br>ERC1200 ~Manager Token~</br></h3>
+                      <br>
+                      <p></p>
+                      <p>This ID card token can be used as an identity on a cloud system as well, which shows policies and permissions.<p>
+                      <p>The picture below tells the simplest way to make such an identity token.<p>
+                      <p>Please install Metamask beforehead!</p>
+                      <a href="https://metamask.io/">MetaMask</a>
+                      <br>
+                      <p>Switch to <b style="color:red;">Reopsten</b>, instead of Mainnet.</p>
+                      <p><br>Push "BUY", Request "FAUCET", and wait for 1ETH is given to your wallet.</p>
+　　                　　　　　<br>
+                      <br>
+                      <h3><b>Constructing the Simplest cloud SNS</b></h3>
+                      <img></img>
+                      <p>Push this button.You can request TokenCreator to make your ERC1200 token!</p>
+                      <div class="command">
+                          <button type="button" id="createToken2" class="btn btn-primary">CreateToken</button>
+                      </div>
+　　                　　　　　<br>
+
+                      <br><p>Next, pls push this button to check your token.</p>
+                      <div class="command">
+                          <button type="button" id="authorityOf2" class="btn btn-info">authorityOf</button>
+                      </div>
+                      <div class="output"></div>
+　　                　　　　　<br><p>Could you check your authority?</p>
+　　                　　　　　<br>
+                      <img></img>
+　　                　　　　　<p>Next, you can set/change your public key of the token.</p>
+                      <br><p>At any moment, this process is available.</p>
+                      <br>
+　　                　　　　　<p>Next, you can set/change your public key of the token.</p>
+                      <div class="command">
+                        <button type="button" id="refreshPublicKey2" class="btn btn-info">refreshPublicKey</button>
+                        <input type="text" id="new-password-input2" class="textbox form-control" placeholder="Fill in a new password" value="" />
+                      </div>
+                      <div class="output"></div>
+　　                　　　　　<p>Then you can use PaaS with Ethereum by push this button.</p>
+                      <div class="command">
+                        <button type="button" id="requestInfo2" class="btn btn-info">Requesting Image via AWS</button>
+                      </div>
+                      <div class="output"></div>
+
+　　                　　　　　<p>That is the usage of the token as client.Next, we'll show you the usage as a manager.</p>
+                      <img></img>
+                      <div class="command">
+                        <button type="button" id="authorityOfSubordinate2" class="btn btn-info">Show a token under your token</button>
+                      </div>
+                      <div class="output"></div>
+
+　　                　　　　　<p>Change his authority.</p>
+                      <div class="command">
+                        <button type="button" id="switchAuthority2" class="btn btn-info">switchAuthority</button>
+                        <!-- radio button で true false 選択したい。-->
+                      </div>
+                      <div class="output"></div>
+
+                    </div>
+                  </div>
+                    <div class="loader loader-4" style="display: none;"></div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn " data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" onclick="back();">BACK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="main.js"></script>
+    </body>
+</html>
