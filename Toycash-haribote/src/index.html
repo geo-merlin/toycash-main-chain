@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ToyCashデモ</title>
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div>
+                    <h1 class="text-center">ToyCash デモ</h1>
+                    <hr/>
+                    <br/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <h4><strong>ハッシュタグの登録</strong></h4>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#hashtagModal">タグの登録を行う</button>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div>
+                    <h4><strong>現在のお前の残高</strong></h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="TokenAddress">トークンの種類</label>
+                            <input type="text" class="form-control" id="TokenAddress">
+                        </div>
+                        <button type="button" id="getBalance" class="btn btn-primary">残高を取得する</button>
+                    </form>
+                    <p id="balance"></p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div>
+                    <h4><strong>審査</strong></h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="Judge_TweetId">ツイートID</label>
+                            <input type="text" class="form-control" id="Judge_TweetId">
+                        </div>
+                        <div class="form-group">
+                            <label for="Judge_UserAddress">ツイートした人</label>
+                            <input type="text" class="form-control" id="Judge_UserAddress">
+                        </div>
+                        <div class="form-group">
+                            <label for="Judge_amount">報酬</label>
+                            <input type="text" class="form-control" id="Judge_amount">
+                        </div>
+                        <div class="form-group">
+                            <label for="Judge_TokenAddress">与えるトークンの種類</label>
+                            <input type="text" class="form-control" id="Judge_TokenAddress">
+                        </div>
+                        <div class="form-group">
+                            <label for="JudgeAddress">審査員のアドレス</label>
+                            <input type="text" class="form-control" id="JudgeAddress">
+                        </div>
+                        <div class="form-group">
+                            <label for="MessageHash">メッセージのハッシュ</label>
+                            <input type="text" class="form-control" id="MessageHash">
+                        </div>
+                        <div class="form-group">
+                            <label for="JudgeSig">署名</label>
+                            <input type="text" class="form-control" id="JudgeSig">
+                        </div>
+                        <button type="button" id="judge" class="btn btn-danger">審査する</button>
+                    </form>
+                    <p id="judgement"></p>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div>
+                    <h4><strong>署名の作成</strong></h4>
+                    <small>審査員が面白いと思ったツイートから署名を作成するためのものです。</small>
+                    <form>
+                        <div class="form-group">
+                            <label for="TweetId">ツイートID</label>
+                            <input type="text" class="form-control" id="TweetId">
+                        </div>
+                        <div class="form-group">
+                            <label for="UserAddress">ツイートした人</label>
+                            <input type="text" class="form-control" id="UserAddress">
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">報酬</label>
+                            <input type="text" class="form-control" id="amount">
+                        </div>
+                        <div class="form-group">
+                            <label for="TokenAddress">与えるトークンの種類</label>
+                            <input type="text" class="form-control" id="TokenAddress">
+                        </div>
+                        <button type="button" id="encode" class="btn btn-warning">署名を生成する</button>
+                    </form>
+                    <p id="encodeTweet"></p>
+                </div>
+            </div>
+
+            <div class="modal" id="hashtagModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">タグの登録</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="X">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div><!-- /.modal-header -->
+                        <div class="modal-body">
+                            <p>ここではハッシュタグの登録を行います。</p>
+                            <form>
+                                <div class="form-group">
+                                    <label for="register-tag">タグ名を入力</label>
+                                    <input type="text" class="form-control" id="register-tag">
+                                </div>
+                            </form>
+                        </div><!-- /.modal-body -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            <button type="button" class="btn btn-primary">登録</button>
+                        </div><!-- /.modal-footer -->
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/web3.min.js"></script>
+        <script type="text/javascript" src="js/truffle-contract.js"></script>
+        <script type="text/javascript" src="js/blockdoubtContractABI.js"></script>
+        <script type="text/javascript" src="js/toycashContractABI.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
